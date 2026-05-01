@@ -4,6 +4,9 @@ Un módulo ligero y potente en JavaScript puro para agregar marcas de agua a im�
 
 ---
 
+<details>
+<summary>🇪🇸 Ver en Español</summary>
+  
 ## 🌾 Español
 
 ### 🍄 Características
@@ -190,9 +193,13 @@ En caso de error, devuelve:
   msg: 'Descripción detallada del error'
 }
 ```
+</details>
 
 ---
 
+<details>
+<summary>🇺🇸 View in English</summary></summary>
+  
 ## 🌾 English
 
 ### 🍄 Features
@@ -380,3 +387,6 @@ If an error occurs, it returns:
   msg: 'Detailed error description'
 }
 ```
+</details>
+
+---
