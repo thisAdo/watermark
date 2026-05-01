@@ -13,7 +13,6 @@ export class Watermark {
 				margin: 20,
 				width: null,
 				opacity: 1.0,
-				uploadToCDN: false,
 				...options
 			};
 
@@ -33,16 +32,13 @@ export class Watermark {
 				throw new Error(`Invalid type "${type}". Valid types are "image" and "video".`);
 			}
 
-			let cdnResponse = null;
-			if (config.uploadToCDN) {
-				cdnResponse = await uploadToCDN(buffer, mimetype, extension);
-			}
+			const cdnResponse = await uploadToCDN(buffer, mimetype, extension);
 
 			return {
 				creator: this.#creators,
 				status: true,
 				data: buffer,
-				url: cdnResponse ? cdnResponse.url : null,
+				url: cdnResponse.url,
 				cdnData: cdnResponse
 			};
 		} catch (e) {
