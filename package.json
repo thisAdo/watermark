@@ -1,5 +1,5 @@
 {
-  "name": "water.js",
+  "name": "waterm",
   "version": "1.1.0",
   "description": "Un modulo simple en JavaScript puro para agregar marcas de agua a imágenes/videos usando ffmpeg nativo y canvas.",
   "main": "index.js",
