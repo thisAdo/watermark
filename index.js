@@ -1,21 +1,9 @@
-import { FFmpeg } from '@ffmpeg/ffmpeg';
 import { processImage } from './lib/image.js';
 import { processVideo } from './lib/video.js';
 import { uploadToCDN } from './lib/upload.js';
 
 export class Watermark {
 	#creators = 'Ado & Maycol';
-	#ffmpeg;
-
-	constructor() {
-		this.#ffmpeg = new FFmpeg();
-	}
-
-	async #initFFmpeg() {
-		if (!this.#ffmpeg.loaded) {
-			await this.#ffmpeg.load();
-		}
-	}
 
 	async execute(source, watermark, type = 'image', options = {}) {
 		try {
@@ -38,8 +26,7 @@ export class Watermark {
 				mimetype = 'image/png';
 				extension = 'png';
 			} else if (type === 'video') {
-				await this.#initFFmpeg();
-				buffer = await processVideo(this.#ffmpeg, source, watermark, config);
+				buffer = await processVideo(source, watermark, config);
 				mimetype = 'video/mp4';
 				extension = 'mp4';
 			} else {
