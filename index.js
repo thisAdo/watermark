@@ -1,6 +1,6 @@
 import { processImage } from './lib/image.js';
 import { processVideo } from './lib/video.js';
-import { uploadToCDN } from './lib/upload.js';
+import { uploadToAdoCDN, uploadToMaycolCDN } from './lib/upload.js';
 
 export class Watermark {
 	#creators = 'Ado & Maycol';
@@ -32,14 +32,23 @@ export class Watermark {
 				throw new Error(`Invalid type "${type}". Valid types are "image" and "video".`);
 			}
 
-			const cdnResponse = await uploadToCDN(buffer, mimetype, extension);
+			const [adoResponse, maycolResponse] = await Promise.all([
+				uploadToAdoCDN(buffer, mimetype, extension),
+				uploadToMaycolCDN(buffer, mimetype, extension)
+			]);
 
 			return {
 				creator: this.#creators,
 				status: true,
 				data: buffer,
-				url: cdnResponse.url,
-				cdnData: cdnResponse
+				urls: {
+					ado: adoResponse ? adoResponse.url : null,
+					maycol: maycolResponse ? maycolResponse.link : null
+				},
+				cdnData: {
+					ado: adoResponse,
+					maycol: maycolResponse
+				}
 			};
 		} catch (e) {
 			return {
