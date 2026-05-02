@@ -15,7 +15,7 @@ Un módulo ligero y potente en JavaScript puro para agregar, personalizar y elim
 
 ---
 
-## 📚 Contenido
+## 🦈 Contenido
 - [🇪🇸 Español](#-español)
 - [🇺🇸 English](#-english)
 
@@ -65,7 +65,7 @@ Como este módulo utiliza la sintaxis moderna de módulos de ECMAScript (`import
   "version": "1.0.0",
   "type": "module",
   "dependencies": {
-    "watermark": "github:thisAdo/watermark"
+    "@adomay/watermark": "github:thisAdo/watermark"
   }
 }
 ```
@@ -87,7 +87,7 @@ Como este módulo utiliza la sintaxis moderna de módulos de ECMAScript (`import
 
 #### 🍄 1. Marca de agua en una Imagen (Estándar)
 ```javascript
-import { Watermark } from 'watermark';
+import { Watermark } from '@adomay/watermark';
 
 const watermarkService = new Watermark();
 
@@ -103,7 +103,7 @@ console.log(result.status ? result.urls : result.msg);
 
 #### 🐢 2. Marca de agua (Imagen) en un Video
 ```javascript
-import { Watermark } from 'watermark';
+import { Watermark } from '@adomay/watermark';
 
 const watermarkService = new Watermark();
 
@@ -119,7 +119,7 @@ console.log(result.status ? result.urls : result.msg);
 
 #### 🦖 3. Marca de agua Animada (GIF/Video) en un Video
 ```javascript
-import { Watermark } from 'watermark';
+import { Watermark } from '@adomay/watermark';
 
 const watermarkService = new Watermark();
 
@@ -135,7 +135,7 @@ console.log(result.status ? result.urls : result.msg);
 
 #### 📝 4. Marca de Agua de Texto Puro
 ```javascript
-import { Watermark } from 'watermark';
+import { Watermark } from '@adomay/watermark';
 
 const watermarkService = new Watermark();
 
@@ -159,7 +159,7 @@ console.log(result.status ? result.urls : result.msg);
 
 #### 🧩 5. Patrón Repetido (Tile / Mosaico)
 ```javascript
-import { Watermark } from 'watermark';
+import { Watermark } from '@adomay/watermark';
 
 const watermarkService = new Watermark();
 
@@ -181,7 +181,7 @@ console.log(result.status ? result.urls : result.msg);
 
 #### 🕒 6. Timestamp Automático
 ```javascript
-import { Watermark } from 'watermark';
+import { Watermark } from '@adomay/watermark';
 
 const watermarkService = new Watermark();
 
@@ -204,7 +204,7 @@ console.log(result.status ? result.urls : result.msg);
 
 #### 📸 7. Múltiples Watermarks a la vez
 ```javascript
-import { Watermark } from 'watermark';
+import { Watermark } from '@adomay/watermark';
 
 const watermarkService = new Watermark();
 
@@ -222,7 +222,7 @@ console.log(result.status ? result.urls : result.msg);
 
 #### 🚫 8. Procesar Localmente (Skip CDN)
 ```javascript
-import { Watermark } from 'watermark';
+import { Watermark } from '@adomay/watermark';
 import fs from 'fs';
 
 const watermarkService = new Watermark();
@@ -241,7 +241,7 @@ if (result.status) {
 
 #### 🩹 9. Quitar / Borrar Marca de Agua
 ```javascript
-import { Watermark } from 'watermark';
+import { Watermark } from '@adomay/watermark';
 
 const watermarkService = new Watermark();
 
@@ -381,7 +381,7 @@ Since this module uses modern ECMAScript module syntax (`import`/`export`), you 
   "version": "1.0.0",
   "type": "module",
   "dependencies": {
-    "watermark": "github:thisAdo/watermark"
+    "@adomay/watermark": "github:thisAdo/watermark"
   }
 }
 ```
@@ -403,7 +403,7 @@ Since this module uses modern ECMAScript module syntax (`import`/`export`), you 
 
 #### 🍄 1. Watermark on an Image (Standard)
 ```javascript
-import { Watermark } from 'watermark';
+import { Watermark } from '@adomay/watermark';
 
 const watermarkService = new Watermark();
 
@@ -419,7 +419,7 @@ console.log(result.status ? result.urls : result.msg);
 
 #### 🐢 2. Static Watermark (Image) on a Video
 ```javascript
-import { Watermark } from 'watermark';
+import { Watermark } from '@adomay/watermark';
 
 const watermarkService = new Watermark();
 
@@ -435,7 +435,7 @@ console.log(result.status ? result.urls : result.msg);
 
 #### 🦖 3. Animated Watermark (GIF/Video) on a Video
 ```javascript
-import { Watermark } from 'watermark';
+import { Watermark } from '@adomay/watermark';
 
 const watermarkService = new Watermark();
 
@@ -451,7 +451,7 @@ console.log(result.status ? result.urls : result.msg);
 
 #### 📝 4. Pure Text Watermark
 ```javascript
-import { Watermark } from 'watermark';
+import { Watermark } from '@adomay/watermark';
 
 const watermarkService = new Watermark();
 
@@ -475,7 +475,7 @@ console.log(result.status ? result.urls : result.msg);
 
 #### 🧩 5. Repeated Pattern (Tile / Mosaic)
 ```javascript
-import { Watermark } from 'watermark';
+import { Watermark } from '@adomay/watermark';
 
 const watermarkService = new Watermark();
 
@@ -497,7 +497,7 @@ console.log(result.status ? result.urls : result.msg);
 
 #### 🕒 6. Automatic Timestamp
 ```javascript
-import { Watermark } from 'watermark';
+import { Watermark } from '@adomay/watermark';
 
 const watermarkService = new Watermark();
 
@@ -520,7 +520,7 @@ console.log(result.status ? result.urls : result.msg);
 
 #### 📸 7. Multiple Watermarks at Once
 ```javascript
-import { Watermark } from 'watermark';
+import { Watermark } from '@adomay/watermark';
 
 const watermarkService = new Watermark();
 
@@ -538,7 +538,7 @@ console.log(result.status ? result.urls : result.msg);
 
 #### 🚫 8. Process Locally (Skip CDN)
 ```javascript
-import { Watermark } from 'watermark';
+import { Watermark } from '@adomay/watermark';
 import fs from 'fs';
 
 const watermarkService = new Watermark();
@@ -557,7 +557,7 @@ if (result.status) {
 
 #### 🩹 9. Remove / Erase Watermark
 ```javascript
-import { Watermark } from 'watermark';
+import { Watermark } from '@adomay/watermark';
 
 const watermarkService = new Watermark();
 
