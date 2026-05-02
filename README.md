@@ -1,11 +1,10 @@
 # 🦖 watermark
 
-Un módulo ligero y potente en JavaScript puro para agregar marcas de agua a imágenes y videos. Construido con `canvas` y `fluent-ffmpeg`, maneja sin problemas archivos locales, buffers y URLs, y sube automáticamente el contenido multimedia procesado a una CDN dual (Adoolab y Soymaycol).
+Un módulo ligero y potente en JavaScript puro para agregar, personalizar y eliminar marcas de agua en imágenes y videos. Construido con `canvas` y `fluent-ffmpeg`, maneja sin problemas archivos locales, buffers y URLs, y sube automáticamente el contenido multimedia procesado a una CDN dual (Adoolab y Soymaycol).
 
 ---
 
-> ⭐ **¡Se agradecería muchísimo si le das una estrellita al repo!** Tu apoyo ayuda a que el proyecto siga creciendo. 🦖
->
+> ⭐ **¡Se agradecería muchísimo si le das una estrellita al repo!** Tu apoyo ayuda a que el proyecto siga creciendo. 🦖  
 > ✨ *It would mean a lot if you starred the repo! Your support helps keep the project alive.* 🌾
 
 ---
@@ -16,19 +15,31 @@ Un módulo ligero y potente en JavaScript puro para agregar marcas de agua a im�
 
 ---
 
+## 📚 Contenido
+- [🇪🇸 Español](#-español)
+- [🇺🇸 English](#-english)
+
+---
+
 <details>
 <summary>🇪🇸 Ver en Español</summary>
-  
+
 ## 🌾 Español
 
 ### 🍄 Características
 
 - 🦖 **Soporte Multiformato:** Agrega marcas de agua tanto a imágenes como a videos.
 - 🐢 **Marcas de Agua Animadas:** Soporta GIFs y videos cortos (hasta 15 segundos) como marca de agua sobre otros videos.
+- 📝 **Texto como Marca de Agua:** No tienes una imagen? Usa texto puro con fuente, color y borde personalizable.
+- 🧩 **Patrón Repetido (Tile):** Protege tus imágenes con marcas de agua en mosaico diagonales o cuadradas.
+- 🕒 **Timestamp Automático:** Agrega la fecha y hora actual dinámicamente como marca de agua.
+- 📸 **Múltiples Watermarks:** Superpon varias marcas de agua en una sola imagen con posiciones individuales.
+- 🩹 **Eliminador de Watermarks:** Borra marcas de agua no deseadas difuminando una región específica (delogo).
 - 📍 **Entradas Flexibles:** Acepta rutas de archivos locales, Buffers o URLs directas HTTP/HTTPS.
-- 🌾 **Posicionamiento Personalizado:** Coloca tu marca de agua exactamente donde la necesitas usando coordenadas o posiciones relativas (`left`, `center`, `right`, `top`, `bottom`).
-- 🍄 **Opacidad y Escalado:** Ajusta la transparencia de la marca de agua y escala su ancho automáticamente manteniendo la proporción original.
-- 🦖 **Auto-CDN Dual:** Sube automáticamente el resultado a dos CDNs al mismo tiempo y devuelve ambos enlaces listos para usarse en tu bot o aplicación.
+- 🌾 **Posicionamiento Personalizado:** Coloca tu marca de agua exactamente donde la necesitas usando coordenadas o posiciones relativas.
+- 🍄 **Opacidad, Escalado y Formatos:** Ajusta transparencia, escala, calidad y formato de salida (PNG, JPG, WEBP, MP4, WEBM).
+- 🚫 **Modo Local (Skip CDN):** Procesa y devuelve solo el Buffer sin subir a ninguna CDN.
+- 🦖 **Auto-CDN Dual:** Sube automáticamente el resultado a dos CDNs al mismo tiempo y devuelve ambos enlaces.
 
 ### 📍 Instalación
 
@@ -74,108 +85,184 @@ Como este módulo utiliza la sintaxis moderna de módulos de ECMAScript (`import
 
 ### 🌾 Ejemplos de Uso
 
-A continuación se muestran ejemplos de cómo utilizar el módulo en diferentes escenarios. En todos los casos, el módulo procesará los archivos y devolverá los enlaces finales.
-
-#### 🍄 1. Marca de agua en una Imagen
-
+#### 🍄 1. Marca de agua en una Imagen (Estándar)
 ```javascript
 import { Watermark } from 'watermark';
 
-async function aplicarMarcaDeAgua() {
-    const watermarkService = new Watermark();
+const watermarkService = new Watermark();
 
-    const options = {
-        x: 'right',
-        y: 'bottom',
-        margin: 20,
-        opacity: 0.8,
-        width: 150
-    };
+const result = await watermarkService.execute(
+    'https://cdn.adoolab.xyz/dl/8932d34a.jpg',
+    'https://cdn.adoolab.xyz/dl/watermark.png',
+    'image',
+    { x: 'right', y: 'bottom', margin: 20, opacity: 0.8, width: 150 }
+);
 
-    const result = await watermarkService.execute(
-        'https://cdn.adoolab.xyz/dl/8932d34a.jpg',
-        'https://cdn.adoolab.xyz/dl/watermark.png',
-        'image',
-        options
-    );
-
-    if (result.status) {
-        console.log(result.urls.ado);
-        console.log(result.urls.maycol);
-    }
-}
-
-aplicarMarcaDeAgua();
+console.log(result.status ? result.urls : result.msg);
 ```
 
 #### 🐢 2. Marca de agua (Imagen) en un Video
-
 ```javascript
 import { Watermark } from 'watermark';
 
-async function aplicarMarcaDeAguaVideo() {
-    const watermarkService = new Watermark();
+const watermarkService = new Watermark();
 
-    const options = {
-        x: 'left',
-        y: 'top',
-        margin: 15,
-        opacity: 0.9,
-        width: 120
-    };
+const result = await watermarkService.execute(
+    'https://cdn.adoolab.xyz/dl/db6f3f3b.mp4',
+    'https://cdn.adoolab.xyz/dl/watermark.png',
+    'video',
+    { x: 'left', y: 'top', opacity: 0.9, width: 120 }
+);
 
-    const result = await watermarkService.execute(
-        'https://cdn.adoolab.xyz/dl/db6f3f3b.mp4',
-        'https://cdn.adoolab.xyz/dl/watermark.png',
-        'video',
-        options
-    );
-
-    if (result.status) {
-        console.log(result.urls.ado);
-        console.log(result.urls.maycol);
-    }
-}
-
-aplicarMarcaDeAguaVideo();
+console.log(result.status ? result.urls : result.msg);
 ```
 
 #### 🦖 3. Marca de agua Animada (GIF/Video) en un Video
-
 ```javascript
 import { Watermark } from 'watermark';
 
-async function aplicarMarcaDeAguaAnimada() {
-    const watermarkService = new Watermark();
+const watermarkService = new Watermark();
 
-    const options = {
-        x: 'left',
-        y: 'bottom',
-        margin: 20,
-        opacity: 0.8,
-        width: 100
-    };
+const result = await watermarkService.execute(
+    'https://cdn.adoolab.xyz/dl/db6f3f3b.mp4',
+    'https://cdn.adoolab.xyz/dl/e426a597.gif',
+    'video',
+    { x: 'left', y: 'bottom', width: 100 }
+);
 
-    const result = await watermarkService.execute(
-        'https://cdn.adoolab.xyz/dl/db6f3f3b.mp4',
-        'https://cdn.adoolab.xyz/dl/e426a597.gif',
-        'video',
-        options
-    );
+console.log(result.status ? result.urls : result.msg);
+```
 
-    if (result.status) {
-        console.log(result.urls.ado);
-        console.log(result.urls.maycol);
+#### 📝 4. Marca de Agua de Texto Puro
+```javascript
+import { Watermark } from 'watermark';
+
+const watermarkService = new Watermark();
+
+const result = await watermarkService.execute(
+    'https://cdn.adoolab.xyz/dl/8932d34a.jpg',
+    null, 
+    'image',
+    {
+        text: '© Mi Empresa 2024',
+        fontSize: 30,
+        fontColor: '#ff0000',
+        strokeColor: '#000000',
+        strokeWidth: 3,
+        x: 'center',
+        y: 'center'
     }
-}
+);
 
-aplicarMarcaDeAguaAnimada();
+console.log(result.status ? result.urls : result.msg);
+```
+
+#### 🧩 5. Patrón Repetido (Tile / Mosaico)
+```javascript
+import { Watermark } from 'watermark';
+
+const watermarkService = new Watermark();
+
+const result = await watermarkService.execute(
+    'https://cdn.adoolab.xyz/dl/8932d34a.jpg',
+    'https://cdn.adoolab.xyz/dl/watermark.png',
+    'image',
+    {
+        x: 'tile',
+        y: 'tile',
+        opacity: 0.2,
+        margin: 50,
+        rotation: -30 
+    }
+);
+
+console.log(result.status ? result.urls : result.msg);
+```
+
+#### 🕒 6. Timestamp Automático
+```javascript
+import { Watermark } from 'watermark';
+
+const watermarkService = new Watermark();
+
+const result = await watermarkService.execute(
+    'https://cdn.adoolab.xyz/dl/8932d34a.jpg',
+    null,
+    'image',
+    {
+        timestamp: true,
+        timestampFormat: 'YYYY-MM-DD HH:mm:ss',
+        fontSize: 20,
+        x: 'right',
+        y: 'bottom',
+        margin: 10
+    }
+);
+
+console.log(result.status ? result.urls : result.msg);
+```
+
+#### 📸 7. Múltiples Watermarks a la vez
+```javascript
+import { Watermark } from 'watermark';
+
+const watermarkService = new Watermark();
+
+const result = await watermarkService.execute(
+    'https://cdn.adoolab.xyz/dl/8932d34a.jpg',
+    [
+        { source: 'https://cdn.adoolab.xyz/dl/watermark.png', x: 'left', y: 'top', width: 80 },
+        { source: 'https://cdn.adoolab.xyz/dl/watermark2.png', x: 'right', y: 'bottom', width: 100 }
+    ],
+    'image'
+);
+
+console.log(result.status ? result.urls : result.msg);
+```
+
+#### 🚫 8. Procesar Localmente (Skip CDN)
+```javascript
+import { Watermark } from 'watermark';
+import fs from 'fs';
+
+const watermarkService = new Watermark();
+
+const result = await watermarkService.execute(
+    'https://cdn.adoolab.xyz/dl/8932d34a.jpg',
+    'https://cdn.adoolab.xyz/dl/watermark.png',
+    'image',
+    { skipCDN: true, outputFormat: 'webp', quality: 80 }
+);
+
+if (result.status) {
+    fs.writeFileSync('mi_foto_local.webp', result.data);
+}
+```
+
+#### 🩹 9. Quitar / Borrar Marca de Agua
+```javascript
+import { Watermark } from 'watermark';
+
+const watermarkService = new Watermark();
+
+const result = await watermarkService.remove(
+    'https://cdn.adoolab.xyz/dl/8932d34a.jpg',
+    'image',
+    {
+        x: 500,
+        y: 400,
+        width: 200,
+        height: 80,
+        blur: 20
+    }
+);
+
+console.log(result.status ? result.urls : result.msg);
 ```
 
 ### 📍 Referencia de la API
 
 #### `execute(source, watermark, type, options)`
-
 Inicia el proceso de superposición de la marca de agua y devuelve un objeto que contiene el Buffer resultante y los enlaces de las subidas a las CDN.
 
 **🌾 Parámetros:**
@@ -183,19 +270,41 @@ Inicia el proceso de superposición de la marca de agua y devuelve un objeto que
 | Parámetro   | Tipo               | Descripción |
 |-------------|--------------------|-------------|
 | `source`    | `String \| Buffer` | El archivo principal. Puede ser una ruta local, una URL HTTP/HTTPS directa o un Buffer en memoria. |
-| `watermark` | `String \| Buffer` | El archivo de la marca de agua. En videos, si es animada, se recortará automáticamente a un máximo de 15 segundos. |
+| `watermark` | `String \| Buffer \| Array \| Null` | El archivo de marca de agua. Si es `Null`, se usará `options.text`. Si es un `Array`, aplicará múltiples watermarks. |
 | `type`      | `String`           | El tipo de medio del archivo principal. Debe ser `'image'` o `'video'`. Por defecto: `'image'`. |
 | `options`   | `Object`           | Objeto opcional de configuración para cambiar la apariencia y posición de la marca de agua. |
 
 **🍄 Objeto `options`:**
 
-| Propiedad | Tipo               | Por defecto | Descripción |
-|-----------|--------------------|-------------|-------------|
-| `x`       | `String \| Number` | `'right'`   | Posición horizontal. Acepta `'left'`, `'center'`, `'right'`, o un número exacto en píxeles. |
-| `y`       | `String \| Number` | `'bottom'`  | Posición vertical. Acepta `'top'`, `'center'`, `'bottom'`, o un número exacto en píxeles. |
-| `margin`  | `Number`           | `20`        | Distancia en píxeles hacia los bordes (se aplica cuando usas posiciones relativas como `'right'` o `'bottom'`). |
-| `width`   | `Number`           | `null`      | Fuerza a la marca de agua a cambiar su tamaño a este ancho específico en píxeles. La altura se ajusta automáticamente. |
-| `opacity` | `Number`           | `1.0`       | Nivel de transparencia de la marca de agua. Va desde `0.0` (invisible) hasta `1.0` (totalmente opaco). |
+| Propiedad         | Tipo               | Por defecto | Descripción |
+|-------------------|--------------------|-------------|-------------|
+| `x`               | `String \| Number` | `'right'`   | Posición horizontal. Acepta `'left'`, `'center'`, `'right'`, `'tile'`, o un número exacto en píxeles. |
+| `y`               | `String \| Number` | `'bottom'`  | Posición vertical. Acepta `'top'`, `'center'`, `'bottom'`, `'tile'`, o un número exacto en píxeles. |
+| `margin`          | `Number`           | `20`        | Distancia en píxeles hacia los bordes (se aplica cuando usas posiciones relativas o en mosaico). |
+| `width`           | `Number`           | `null`      | Fuerza a la marca de agua a cambiar su tamaño a este ancho específico en píxeles. |
+| `opacity`         | `Number`           | `1.0`       | Nivel de transparencia. Va desde `0.0` (invisible) hasta `1.0` (opaco). |
+| `rotation`        | `Number`           | `null`      | Rota la marca de agua en grados (solo aplicable en modo mosaico `'tile'`). |
+| `text`            | `String`           | `null`      | Texto a renderizar como marca de agua (ignora el parámetro `watermark`). |
+| `fontSize`        | `Number`           | `24`        | Tamaño de la fuente si se usa `text`. |
+| `fontColor`       | `String`           | `'#ffffff'` | Color del texto (hexadecimal). |
+| `strokeColor`     | `String`           | `'#000000'` | Color del borde del texto (hexadecimal). |
+| `strokeWidth`     | `Number`           | `2`         | Grosor del borde del texto. |
+| `timestamp`       | `Boolean`          | `false`     | Si es `true`, genera un texto dinámico con la fecha y hora actuales. |
+| `timestampFormat` | `String`           | `'DD/MM/YYYY HH:mm:ss'` | Formato de la fecha (variables: YYYY, MM, DD, HH, mm, ss). |
+| `skipCDN`         | `Boolean`          | `false`     | Si es `true`, no sube el archivo a ninguna CDN y devuelve solo el Buffer. |
+| `outputFormat`    | `String`           | `'png'/'mp4'`| Formato de salida ('png', 'jpg', 'webp' para imágenes; 'mp4', 'webm' para videos). |
+| `quality`         | `Number`           | `90`        | Calidad de compresión para formatos como jpg o webp (0 a 100). |
+
+#### `remove(source, type, region)`
+Intenta eliminar o difuminar una marca de agua existente en una zona específica del archivo.
+
+**🌾 Parámetros:**
+
+| Parámetro | Tipo               | Descripción |
+|-----------|--------------------|-------------|
+| `source`  | `String \| Buffer` | El archivo principal con la marca de agua a eliminar. |
+| `type`    | `String`           | `'image'` o `'video'`. |
+| `region`  | `Object`           | Las coordenadas exactas de la marca de agua. Requiere `x`, `y`, `width`, `height`. Opcional: `blur` (nivel de difuminado, por defecto 15). |
 
 **🐢 Valor de Retorno:**
 
@@ -210,10 +319,7 @@ Si el proceso tiene éxito, devuelve un objeto con la siguiente estructura:
     ado: 'https://cdn.adoolab.xyz/dl/output.png',
     maycol: 'https://cdn.soymaycol.icu/files/output.png'
   },
-  cdnData: {
-    ado: { ... },
-    maycol: { ... }
-  }
+  cdnData: { ... }
 }
 ```
 
@@ -226,22 +332,29 @@ En caso de error, devuelve:
   msg: 'Descripción detallada del error'
 }
 ```
+
 </details>
 
 ---
 
 <details>
 <summary>🇺🇸 View in English</summary>
-  
+
 ## 🌾 English
 
 ### 🍄 Features
 
 - 🦖 **Multi-Format Support:** Add watermarks to both images and videos.
 - 🐢 **Animated Watermarks:** Supports GIFs and short videos (up to 15 seconds) as watermarks over other videos.
+- 📝 **Text Watermark:** Don't have an image? Use pure text with custom font, color, and stroke.
+- 🧩 **Tile Pattern:** Protect your images with diagonal or square mosaic watermarks.
+- 🕒 **Automatic Timestamp:** Dynamically add the current date and time as a watermark.
+- 📸 **Multiple Watermarks:** Overlay several watermarks on a single image with individual positions.
+- 🩹 **Watermark Remover:** Erase unwanted watermarks by blurring a specific region (delogo).
 - 📍 **Flexible Inputs:** Accepts local file paths, raw Buffers, or direct HTTP/HTTPS URLs.
-- 🌾 **Custom Positioning:** Place your watermark exactly where you need it using custom coordinates or relative text positions (`left`, `center`, `right`, `top`, `bottom`).
-- 🍄 **Opacity & Scaling:** Adjust watermark transparency and auto-scale width while keeping the original aspect ratio.
+- 🌾 **Custom Positioning:** Place your watermark exactly where you need it using coordinates or relative text positions.
+- 🍄 **Opacity, Scaling & Formats:** Adjust transparency, scale, quality, and output format (PNG, JPG, WEBP, MP4, WEBM).
+- 🚫 **Local Mode (Skip CDN):** Process and return only the Buffer without uploading to any CDN.
 - 🦖 **Dual Auto-CDN:** Automatically uploads the resulting output to two external CDNs simultaneously and returns both ready-to-use URLs.
 
 ### 📍 Installation
@@ -288,108 +401,184 @@ Since this module uses modern ECMAScript module syntax (`import`/`export`), you 
 
 ### 🌾 Usage Examples
 
-Below are examples of how to use the module in different scenarios. In all cases, the module will process the files and return the final URLs.
-
-#### 🍄 1. Watermark on an Image
-
+#### 🍄 1. Watermark on an Image (Standard)
 ```javascript
 import { Watermark } from 'watermark';
 
-async function applyImageWatermark() {
-    const watermarkService = new Watermark();
+const watermarkService = new Watermark();
 
-    const options = {
-        x: 'right',
-        y: 'bottom',
-        margin: 20,
-        opacity: 0.8,
-        width: 150
-    };
+const result = await watermarkService.execute(
+    'https://cdn.adoolab.xyz/dl/8932d34a.jpg',
+    'https://cdn.adoolab.xyz/dl/watermark.png',
+    'image',
+    { x: 'right', y: 'bottom', margin: 20, opacity: 0.8, width: 150 }
+);
 
-    const result = await watermarkService.execute(
-        'https://cdn.adoolab.xyz/dl/8932d34a.jpg',
-        'https://cdn.adoolab.xyz/dl/watermark.png',
-        'image',
-        options
-    );
-
-    if (result.status) {
-        console.log(result.urls.ado);
-        console.log(result.urls.maycol);
-    }
-}
-
-applyImageWatermark();
+console.log(result.status ? result.urls : result.msg);
 ```
 
 #### 🐢 2. Static Watermark (Image) on a Video
-
 ```javascript
 import { Watermark } from 'watermark';
 
-async function applyVideoWatermark() {
-    const watermarkService = new Watermark();
+const watermarkService = new Watermark();
 
-    const options = {
-        x: 'left',
-        y: 'top',
-        margin: 15,
-        opacity: 0.9,
-        width: 120
-    };
+const result = await watermarkService.execute(
+    'https://cdn.adoolab.xyz/dl/db6f3f3b.mp4',
+    'https://cdn.adoolab.xyz/dl/watermark.png',
+    'video',
+    { x: 'left', y: 'top', opacity: 0.9, width: 120 }
+);
 
-    const result = await watermarkService.execute(
-        'https://cdn.adoolab.xyz/dl/db6f3f3b.mp4',
-        'https://cdn.adoolab.xyz/dl/watermark.png',
-        'video',
-        options
-    );
-
-    if (result.status) {
-        console.log(result.urls.ado);
-        console.log(result.urls.maycol);
-    }
-}
-
-applyVideoWatermark();
+console.log(result.status ? result.urls : result.msg);
 ```
 
 #### 🦖 3. Animated Watermark (GIF/Video) on a Video
-
 ```javascript
 import { Watermark } from 'watermark';
 
-async function applyAnimatedWatermark() {
-    const watermarkService = new Watermark();
+const watermarkService = new Watermark();
 
-    const options = {
-        x: 'left',
-        y: 'bottom',
-        margin: 20,
-        opacity: 0.8,
-        width: 100
-    };
+const result = await watermarkService.execute(
+    'https://cdn.adoolab.xyz/dl/db6f3f3b.mp4',
+    'https://cdn.adoolab.xyz/dl/e426a597.gif',
+    'video',
+    { x: 'left', y: 'bottom', width: 100 }
+);
 
-    const result = await watermarkService.execute(
-        'https://cdn.adoolab.xyz/dl/db6f3f3b.mp4',
-        'https://cdn.adoolab.xyz/dl/e426a597.gif',
-        'video',
-        options
-    );
+console.log(result.status ? result.urls : result.msg);
+```
 
-    if (result.status) {
-        console.log(result.urls.ado);
-        console.log(result.urls.maycol);
+#### 📝 4. Pure Text Watermark
+```javascript
+import { Watermark } from 'watermark';
+
+const watermarkService = new Watermark();
+
+const result = await watermarkService.execute(
+    'https://cdn.adoolab.xyz/dl/8932d34a.jpg',
+    null, 
+    'image',
+    {
+        text: '© My Company 2024',
+        fontSize: 30,
+        fontColor: '#ff0000',
+        strokeColor: '#000000',
+        strokeWidth: 3,
+        x: 'center',
+        y: 'center'
     }
-}
+);
 
-applyAnimatedWatermark();
+console.log(result.status ? result.urls : result.msg);
+```
+
+#### 🧩 5. Repeated Pattern (Tile / Mosaic)
+```javascript
+import { Watermark } from 'watermark';
+
+const watermarkService = new Watermark();
+
+const result = await watermarkService.execute(
+    'https://cdn.adoolab.xyz/dl/8932d34a.jpg',
+    'https://cdn.adoolab.xyz/dl/watermark.png',
+    'image',
+    {
+        x: 'tile',
+        y: 'tile',
+        opacity: 0.2,
+        margin: 50,
+        rotation: -30 
+    }
+);
+
+console.log(result.status ? result.urls : result.msg);
+```
+
+#### 🕒 6. Automatic Timestamp
+```javascript
+import { Watermark } from 'watermark';
+
+const watermarkService = new Watermark();
+
+const result = await watermarkService.execute(
+    'https://cdn.adoolab.xyz/dl/8932d34a.jpg',
+    null,
+    'image',
+    {
+        timestamp: true,
+        timestampFormat: 'YYYY-MM-DD HH:mm:ss',
+        fontSize: 20,
+        x: 'right',
+        y: 'bottom',
+        margin: 10
+    }
+);
+
+console.log(result.status ? result.urls : result.msg);
+```
+
+#### 📸 7. Multiple Watermarks at Once
+```javascript
+import { Watermark } from 'watermark';
+
+const watermarkService = new Watermark();
+
+const result = await watermarkService.execute(
+    'https://cdn.adoolab.xyz/dl/8932d34a.jpg',
+    [
+        { source: 'https://cdn.adoolab.xyz/dl/watermark.png', x: 'left', y: 'top', width: 80 },
+        { source: 'https://cdn.adoolab.xyz/dl/watermark2.png', x: 'right', y: 'bottom', width: 100 }
+    ],
+    'image'
+);
+
+console.log(result.status ? result.urls : result.msg);
+```
+
+#### 🚫 8. Process Locally (Skip CDN)
+```javascript
+import { Watermark } from 'watermark';
+import fs from 'fs';
+
+const watermarkService = new Watermark();
+
+const result = await watermarkService.execute(
+    'https://cdn.adoolab.xyz/dl/8932d34a.jpg',
+    'https://cdn.adoolab.xyz/dl/watermark.png',
+    'image',
+    { skipCDN: true, outputFormat: 'webp', quality: 80 }
+);
+
+if (result.status) {
+    fs.writeFileSync('my_local_photo.webp', result.data);
+}
+```
+
+#### 🩹 9. Remove / Erase Watermark
+```javascript
+import { Watermark } from 'watermark';
+
+const watermarkService = new Watermark();
+
+const result = await watermarkService.remove(
+    'https://cdn.adoolab.xyz/dl/8932d34a.jpg',
+    'image',
+    {
+        x: 500,
+        y: 400,
+        width: 200,
+        height: 80,
+        blur: 20
+    }
+);
+
+console.log(result.status ? result.urls : result.msg);
 ```
 
 ### 📍 API Reference
 
 #### `execute(source, watermark, type, options)`
-
 Executes the watermark overlay process and returns an object containing the resulting Buffer and the dual CDN upload data.
 
 **🌾 Parameters:**
@@ -397,19 +586,41 @@ Executes the watermark overlay process and returns an object containing the resu
 | Parameter   | Type               | Description |
 |-------------|--------------------|-------------|
 | `source`    | `String \| Buffer` | The main media file. Can be a local path, an HTTP/HTTPS URL, or a Buffer. |
-| `watermark` | `String \| Buffer` | The watermark file. In videos, if this is an animated watermark, it is automatically trimmed to a maximum of 15 seconds. |
+| `watermark` | `String \| Buffer \| Array \| Null` | The watermark file. If `Null`, uses `options.text`. If an `Array`, applies multiple watermarks sequentially. |
 | `type`      | `String`           | Specifies the main media type. Must be either `'image'` or `'video'`. Defaults to `'image'`. |
 | `options`   | `Object`           | Optional configuration object to change the watermark's appearance and position. |
 
 **🍄 Options Object:**
 
-| Property  | Type               | Default    | Description |
-|-----------|--------------------|------------|-------------|
-| `x`       | `String \| Number` | `'right'`  | Horizontal position. Accepts `'left'`, `'center'`, `'right'`, or a specific number in pixels. |
-| `y`       | `String \| Number` | `'bottom'` | Vertical position. Accepts `'top'`, `'center'`, `'bottom'`, or a specific number in pixels. |
-| `margin`  | `Number`           | `20`       | Margin in pixels applied when using relative string positions. |
-| `width`   | `Number`           | `null`     | Forces the watermark to scale to a specific width in pixels, keeping the original aspect ratio. |
-| `opacity` | `Number`           | `1.0`      | Transparency level of the watermark, from `0.0` (invisible) to `1.0` (fully opaque). |
+| Property         | Type               | Default    | Description |
+|------------------|--------------------|------------|-------------|
+| `x`              | `String \| Number` | `'right'`  | Horizontal position. Accepts `'left'`, `'center'`, `'right'`, `'tile'`, or a specific number in pixels. |
+| `y`              | `String \| Number` | `'bottom'` | Vertical position. Accepts `'top'`, `'center'`, `'bottom'`, `'tile'`, or a specific number in pixels. |
+| `margin`         | `Number`           | `20`       | Margin in pixels applied when using relative string positions or tile mode. |
+| `width`          | `Number`           | `null`     | Forces the watermark to scale to a specific width in pixels. |
+| `opacity`        | `Number`           | `1.0`      | Transparency level, from `0.0` (invisible) to `1.0` (fully opaque). |
+| `rotation`       | `Number`           | `null`     | Rotates the watermark in degrees (only applicable in `'tile'` mode). |
+| `text`           | `String`           | `null`     | Text to render as a watermark (ignores the `watermark` parameter). |
+| `fontSize`       | `Number`           | `24`       | Font size if using `text`. |
+| `fontColor`      | `String`           | `'#ffffff'`| Text color (hexadecimal). |
+| `strokeColor`    | `String`           | `'#000000'`| Text stroke color (hexadecimal). |
+| `strokeWidth`    | `Number`           | `2`        | Text stroke thickness. |
+| `timestamp`      | `Boolean`          | `false`    | If `true`, generates dynamic text with the current date and time. |
+| `timestampFormat`| `String`           | `'DD/MM/YYYY HH:mm:ss'` | Date format (variables: YYYY, MM, DD, HH, mm, ss). |
+| `skipCDN`        | `Boolean`          | `false`    | If `true`, skips uploading to CDNs and returns only the Buffer. |
+| `outputFormat`   | `String`           | `'png'/'mp4'`| Output format ('png', 'jpg', 'webp' for images; 'mp4', 'webm' for videos). |
+| `quality`        | `Number`           | `90`       | Compression quality for formats like jpg or webp (0 to 100). |
+
+#### `remove(source, type, region)`
+Attempts to remove or blur an existing watermark in a specific region of the file using native canvas blur or ffmpeg delogo filter.
+
+**🌾 Parameters:**
+
+| Parameter | Type               | Description |
+|-----------|--------------------|-------------|
+| `source`  | `String \| Buffer` | The main media file containing the watermark to erase. |
+| `type`    | `String`           | `'image'` or `'video'`. |
+| `region`  | `Object`           | The exact coordinates of the watermark. Requires `x`, `y`, `width`, `height`. Optional: `blur` (blur level, defaults to 15). |
 
 **🐢 Return Value:**
 
@@ -424,10 +635,7 @@ If successful, returns a Promise that resolves to an object with the following s
     ado: 'https://cdn.adoolab.xyz/dl/output.png',
     maycol: 'https://cdn.soymaycol.icu/files/output.png'
   },
-  cdnData: {
-    ado: { ... },
-    maycol: { ... }
-  }
+  cdnData: { ... }
 }
 ```
 
@@ -440,6 +648,5 @@ If an error occurs, it returns:
   msg: 'Detailed error description'
 }
 ```
-</details>
 
----
+</details>
