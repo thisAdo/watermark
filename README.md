@@ -20,10 +20,16 @@ Un módulo ligero y potente en JavaScript puro para agregar marcas de agua a im�
 
 ### 📍 Instalación
 
-Para instalar el módulo directamente desde GitHub usando la terminal (CLI), ejecuta el siguiente comando:
+Para instalar el módulo directamente desde GitHub usando la terminal (CLI), ejecuta:
 
+# VIA GITHUB
 ```bash
 npm install github:thisAdo/watermark
+```
+
+# VIA NPM
+```bash
+npm install @adomay/watermark
 ```
 
 Como este módulo utiliza la sintaxis moderna de módulos de ECMAScript (`import`/`export`), debes asegurarte de que el proyecto donde lo vayas a usar tenga configurado `"type": "module"` en su archivo `package.json`. Tu `package.json` debería verse similar a esto:
@@ -34,7 +40,8 @@ Como este módulo utiliza la sintaxis moderna de módulos de ECMAScript (`import
   "version": "1.0.0",
   "type": "module",
   "dependencies": {
-    "watermark": "github:thisAdo/watermark"
+    "watermark": "github:thisAdo/watermark" // Via Github
+    "@adomay/watermark": "*" // Via NPM
   }
 }
 ```
@@ -216,19 +223,26 @@ En caso de error, devuelve:
 
 To install the module directly from the GitHub using the CLI, run the following command:
 
+# BY GITHUB
 ```bash
 npm install github:thisAdo/watermark
+```
+
+# BY NPM
+```bash
+npm install @adomay/watermark
 ```
 
 Since this module uses modern ECMAScript module syntax (`import`/`export`), you must ensure that the project where you are using it has `"type": "module"` set in its `package.json`. Your `package.json` should look similar to this:
 
 ```json
 {
-  "name": "my-awesome-project",
+  "name": "my-project",
   "version": "1.0.0",
   "type": "module",
   "dependencies": {
-    "watermark": "github:thisAdo/watermark"
+    "watermark": "github:thisAdo/watermark" // by Github
+    "@adomay/watermark": "*" // by NPM
   }
 }
 ```
