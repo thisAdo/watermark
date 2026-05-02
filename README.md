@@ -40,8 +40,8 @@ Como este módulo utiliza la sintaxis moderna de módulos de ECMAScript (`import
   "version": "1.0.0",
   "type": "module",
   "dependencies": {
-    "watermark": "github:thisAdo/watermark" // Via Github
-    "@adomay/watermark": "*" // Via NPM
+    "watermark": "github:thisAdo/watermark" <!-- // POR GITHUB -->
+    "@adomay/watermark": "*" <!-- // POR NPM -->
   }
 }
 ```
@@ -241,8 +241,8 @@ Since this module uses modern ECMAScript module syntax (`import`/`export`), you 
   "version": "1.0.0",
   "type": "module",
   "dependencies": {
-    "watermark": "github:thisAdo/watermark" // by Github
-    "@adomay/watermark": "*" // by NPM
+    "watermark": "github:thisAdo/watermark" <!-- // BY GITHUB -->
+    "@adomay/watermark": "*" <!-- // by NPM--> 
   }
 }
 ```
