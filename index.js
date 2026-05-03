@@ -72,8 +72,10 @@ export class Watermark {
 
     async remove(source, type = 'image', region = {}) {
         try {
-            if (!region.x && region.x !== 0 || !region.y && region.y !== 0 || !region.width || !region.height) {
-                throw new Error('Region object with {x, y, width, height} is required to remove a watermark.');
+            if (type === 'video') {
+                if (!region.x && region.x !== 0 || !region.y && region.y !== 0 || !region.width || !region.height) {
+                    throw new Error('Se requiere el objeto region {x, y, width, height} exacto para eliminar marcas de agua en videos.');
+                }
             }
 
             let buffer;
